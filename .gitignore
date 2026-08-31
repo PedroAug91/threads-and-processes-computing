@@ -1,0 +1,3 @@
+/varredor
+*.o
+/.clangd
