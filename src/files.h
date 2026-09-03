@@ -4,6 +4,7 @@
 #include "arguments.h"
 #include "compute.h"
 #include <stdint.h>
-int save_on_file(const Arguments *p_args, const ElapsedTimes *p_t);
+
+int save_results(const Arguments *p_args, const ElapsedTimes *p_t);
 
 #endif

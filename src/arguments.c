@@ -10,17 +10,14 @@ int parse_arguments(const int argc, char **args, Arguments *p_args) {
 	/*
 	 * The expected argument count for the program is exactly 6.
 	 *
-	 * We subtract 1 due to the 'null terminator' at the end of
-	 * the arguments array.
-	 *
 	 * ./varredor <A> <B> <W> <modo> <particao> <arquivo_saida>
 	 *
-	 * A - Start of the interval
-	 * B - End of the interval
-	 * W - Number of threads/processes to use
-	 * modo[processing_mode] - "thread" or "processo"
-	 * particao[partition_type] - "bloco" or "ciclo"
-	 * arquivo_saida[output_file] - Output file (.csv or .txt)
+	 * A				- Start of the interval
+	 * B				- End of the interval
+	 * W				- Number of threads/processes to use
+	 * modo[processing_mode]	- "thread" or "processo"
+	 * particao[partition_mode]	- "bloco" or "ciclo"
+	 * arquivo_saida[output_file]	- Output file (.csv or .txt)
 	 *
 	 */
 	if (argc - 1 != 6) {
@@ -51,7 +48,7 @@ int parse_arguments(const int argc, char **args, Arguments *p_args) {
 	}
 
 	p_args->W = (u_int8_t)atoi(args[3]);
-	if (p_args->W < 1 && p_args->W != 2 && p_args->W != 4 && p_args->W != 8) {
+	if (p_args->W != 1 && p_args->W != 2 && p_args->W != 4 && p_args->W != 8) {
 		printf("ERROR: 'W' MUST be '1', '2', '4' or '8'.\n");
 		return EXIT_FAILURE;
 	}

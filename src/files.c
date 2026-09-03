@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-int save_on_file(const Arguments *p_args, const ElapsedTimes *p_t) {
+int save_results(const Arguments *p_args, const ElapsedTimes *p_t) {
 	FILE *p_file;
 
 	p_file = fopen(p_args->output_file, "a");
