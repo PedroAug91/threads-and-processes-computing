@@ -6,21 +6,18 @@
 #include <sys/types.h>
 
 int main(int argc, char **argv) {
-	int64_t A, B;
-	int8_t W;
-	char *processing_mode;
-	char *partition_type;
-	char *output_file;
+	Arguments args = {0, 0, 0, "", "", ""};
 
-	if (!parse_arguments(argc, argv, &A, &B, &W, &processing_mode,
-				&partition_type, &output_file)) {
-		printf("Exiting...\n");
-		exit(1);
+	if (parse_arguments(argc, argv, &args) == EXIT_FAILURE) {
+		printf("Exiting with failure code: %d...\n", EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 
-	if (!compute(A, B, W, partition_type, processing_mode, output_file)) {
-		printf("Exiting...\n");
-		exit(1);
+	if (compute(&args) == EXIT_FAILURE) {
+		printf("Exiting with failure code: %d...\n", EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	};
 
+	printf("Exiting with success code: %d...\n", EXIT_SUCCESS);
+	return EXIT_SUCCESS;
 }

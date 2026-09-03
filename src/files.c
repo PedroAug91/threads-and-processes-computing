@@ -1,31 +1,34 @@
 #include "files.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
 
-int save_on_file(const char *file_name, const char *processing_mode,
-		const char *partition_type, const int8_t W, const int64_t *L,
-		const double total_elapsed, const double min_child_elapsed,
-		const double max_child_elapsed,
-		const double agreggation_elapsed) {
+int save_results(const Arguments *p_args, const ElapsedTimes *p_t) {
 	FILE *p_file;
 
-	p_file = fopen(file_name, "a");
+	p_file = fopen(p_args->output_file, "a");
 
 	if (p_file == NULL) {
-		printf("ERROR: Could not open the file %s\n", file_name);
-		return 0;
+		printf("ERROR: Could not open the file %s\n", p_args->output_file);
+		return EXIT_FAILURE;
 	}
 
-	if (W == 1) {
-		fprintf(p_file, "%s, %s, %hhu, %ld, %.2e, -1, -1, -1\n", processing_mode,
-				partition_type, W, *L, total_elapsed);
+	u_int64_t L = p_args->B - p_args->A + 1;
+
+	if (p_args->W == 1) {
+		fprintf(p_file, "%s, %s, %hhu, %ld, %.2e, -1, -1, -1\n",
+				p_args->processing_mode, p_args->partition_mode, p_args->W, L,
+				p_t->total_elapsed);
 		fclose(p_file);
-		return 1;
+		return EXIT_SUCCESS;
 	}
 
 	fprintf(p_file, "%s, %s, %hhu, %ld, %.2e, %.2e, %.2e, %.2e\n",
-			processing_mode, partition_type, W, *L, total_elapsed,
-			min_child_elapsed, max_child_elapsed, agreggation_elapsed);
+			p_args->processing_mode, p_args->partition_mode, p_args->W, L,
+			p_t->total_elapsed, p_t->min_child_elapsed, p_t->max_child_elapsed,
+			p_t->agreggation_elapsed);
+
 	fclose(p_file);
 
-	return 1;
+	return EXIT_SUCCESS;
 }
