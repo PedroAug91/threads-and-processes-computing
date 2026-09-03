@@ -14,17 +14,13 @@ int main(int argc, char **argv) {
 
 	if (!parse_arguments(argc, argv, &A, &B, &W, &processing_mode,
 				&partition_type, &output_file)) {
-		printf("Exiting program.\n");
+		printf("Exiting...\n");
 		exit(1);
 	}
 
-	if (compute(A, B, W, partition_type, processing_mode)) {
-		printf("\nSuccess.\n");
-	} else {
-		printf("\nFail.\n");
-	}
+	if (!compute(A, B, W, partition_type, processing_mode, output_file)) {
+		printf("Exiting...\n");
+		exit(1);
+	};
 
-	printf("\n=============\nDEBUG INFO\n=============\n");
-	printf("A=%lu\nB=%lu\nW=%hhu\nmodo=%s\nparticao=%s\narquivo=%s\n", A, B, W,
-			processing_mode, partition_type, output_file);
 }

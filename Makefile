@@ -3,7 +3,7 @@ CFLAGS  = -Wall -Wextra -std=c11 -O3
 LDFLAGS = -pthread
 
 SRC     = ./src
-OBJ     = $(SRC)/main.o $(SRC)/arguments.o $(SRC)/compute.o
+OBJ     = $(SRC)/main.o $(SRC)/arguments.o $(SRC)/compute.o $(SRC)/files.o
 TARGET  = varredor
 
 all: $(TARGET)
@@ -14,7 +14,7 @@ $(TARGET): $(OBJ)
 $(SRC)/%.o: $(SRC)/%.c $(SRC)/%.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(SRC)/main.o: $(SRC)/main.c $(SRC)/arguments.h $(SRC)/compute.o
+$(SRC)/main.o: $(SRC)/main.c $(SRC)/arguments.h $(SRC)/compute.h $(SRC)/files.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:

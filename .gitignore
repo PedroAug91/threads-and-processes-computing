@@ -1,3 +1,4 @@
 /varredor
 *.o
-/.clangd
+*.csv
+*.txt

@@ -1,16 +1,21 @@
+#include "files.h"
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <threads.h>
 #include <time.h>
 
-#define TRUE 1;
-#define FALSE 0;
 
-int sequential_compute(const int64_t _start, const int64_t _end, double *p_elapsed) {
-
+void sequential_compute(const int64_t _start, const int64_t _end, double *p_elapsed) {
+	u_int64_t steps = 0;
 	clock_t t_start = clock();
+
 	for (int64_t i = _start; i <= _end; i++) {
 		int64_t n = _start;
+		steps = 0;
 		while (n != 1) {
+			steps++;
 			if (n % 2 == 0) {
 				n = n / 2;
 			} else {
@@ -20,29 +25,27 @@ int sequential_compute(const int64_t _start, const int64_t _end, double *p_elaps
 	}
 	clock_t t_end = clock();
 
-	*p_elapsed = (double)(t_end - t_start) / CLOCKS_PER_SEC;
+	printf("Passos = %lu\n", steps);
 
-	return TRUE;
+	*p_elapsed = (double)(t_end - t_start) * 1000 / CLOCKS_PER_SEC;
 }
 
-int8_t compute(const int64_t _start, const int64_t _end, const int64_t W,
-		const char *partition_type, const char *processing_mode) {
-	int8_t done = 0;
-
-	// milliseconds
+int8_t compute(const int64_t start, const int64_t end, const int64_t W,
+		const char *partition_type, const char *processing_mode, const char *output_file) {
 	double total_elapsed = -1;
 	double min_child_elapsed = -1;
 	double max_child_elapsed = -1;
 	double agreggation_elapsed = -1;
 
 	if (W == 1) {
-		done = sequential_compute(_start, _end, &total_elapsed);
+		sequential_compute(start, end, &total_elapsed);
 	} else {
 		printf("WIP\n");
+		exit(1);
 	}
 
-	int64_t L = _end - _start + 1;
-	printf("%s, %s, %lu, %lu, %f, %f, %f, %f\n", processing_mode, partition_type, W, L, total_elapsed, min_child_elapsed, max_child_elapsed, agreggation_elapsed);
+	int64_t L = end - start + 1;
 
-	return done;
+	return save_on_file(output_file, processing_mode, partition_type, W, &L, total_elapsed, min_child_elapsed, max_child_elapsed, agreggation_elapsed);
+
 }
