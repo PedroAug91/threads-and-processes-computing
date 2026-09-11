@@ -16,7 +16,7 @@ int parse_arguments(const int argc, char **args, Arguments *p_args) {
 	 * B				- End of the interval
 	 * W				- Number of threads/processes to use
 	 * modo[processing_mode]	- "thread" or "processo"
-	 * particao[partition_mode]	- "bloco" or "ciclo"
+	 * particao[partition_mode]	- "bloco" or "ciclico"
 	 * arquivo_saida[output_file]	- Output file (.csv or .txt)
 	 *
 	 */
@@ -61,8 +61,8 @@ int parse_arguments(const int argc, char **args, Arguments *p_args) {
 
 
 	p_args->partition_mode = args[5];
-	if (strcmp(p_args->partition_mode, "bloco") != 0 && strcmp(p_args->partition_mode, "ciclo") != 0) {
-		printf("ERROR: 'particao' MUST be 'bloco' or 'ciclo', got: '%s' instead\n", p_args->partition_mode);
+	if (strcmp(p_args->partition_mode, "bloco") != 0 && strcmp(p_args->partition_mode, "ciclico") != 0) {
+		printf("ERROR: 'particao' MUST be 'bloco' or 'ciclico', got: '%s' instead\n", p_args->partition_mode);
 		return EXIT_FAILURE;
 	}
 

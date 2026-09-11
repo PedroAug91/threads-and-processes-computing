@@ -25,7 +25,7 @@ int save_results(const Arguments *p_args, const ElapsedTimes *p_t) {
 
 	fprintf(p_file, "%s, %s, %hhu, %ld, %.2e, %.2e, %.2e, %.2e\n",
 			p_args->processing_mode, p_args->partition_mode, p_args->W, L,
-			p_t->total_elapsed, p_t->min_child_elapsed, p_t->max_child_elapsed,
+			p_t->total_elapsed, p_t->max_child_elapsed, p_t->min_child_elapsed,
 			p_t->agreggation_elapsed);
 
 	fclose(p_file);
