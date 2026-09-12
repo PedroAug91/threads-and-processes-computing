@@ -32,3 +32,27 @@ int save_results(const Arguments *p_args, const ElapsedTimes *p_t) {
 
 	return EXIT_SUCCESS;
 }
+
+void write_parcial(u_int8_t i, u_int64_t steps, double elapsed) {
+	char name[32];
+	snprintf(name, sizeof name, "parcial_%u.txt", i);
+	FILE *f = fopen(name, "w");
+	if (f == NULL) {
+		printf("ERROR: could not open %s\n", name);
+		return;
+	}
+	fprintf(f, "%lu\n%.9f\n", steps, elapsed);
+	fclose(f);
+}
+
+int read_parcial(u_int8_t i, u_int64_t *p_steps, double *p_elapsed) {
+	char name[32];
+	snprintf(name, sizeof name, "parcial_%u.txt", i);
+	FILE *f = fopen(name, "r");
+	if (f == NULL) {
+		return EXIT_FAILURE;
+	}
+	int r = fscanf(f, "%lu\n%lf", p_steps, p_elapsed);
+	fclose(f);
+	return r == 2 ? EXIT_SUCCESS : EXIT_FAILURE;
+}
